@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=ZeraOS Updater
+Icon=/usr/share/icons/zeraos-updater.svg
+Exec=python /usr/bin/zeraos-updater
+Terminal=false
+StartupNotify=false
+Categories=System;

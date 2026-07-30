@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import subprocess
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QPlainTextEdit
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QPlainTextEdit, QHBoxLayout
 from PyQt6.QtGui import QIcon
 from PyQt6.QtCore import QProcess, Qt
 
@@ -19,11 +19,9 @@ class Window(QWidget):
         self.Result.setStyleSheet("font-size: 13px;")
         self.Result.setAlignment(Qt.AlignmentFlag.AlignHCenter)
 
-        self.Update = QPushButton("Update system")
-        self.Update.clicked.connect(self.updatesystem)
-
         self.Terminal = QPlainTextEdit()
         self.Terminal.setReadOnly(True)
+        self.Terminal.hide()
 
         self.Terminal.setStyleSheet("""
     QPlainTextEdit {
@@ -33,15 +31,42 @@ class Window(QWidget):
 """)
 
         win.addWidget(self.Terminal)
-        win.addWidget(self.Update)
         win.addWidget(self.Result)
 
         self.setLayout(win)
 
+        update = QHBoxLayout()
+
+        self.Update = QPushButton("Update system")
+        self.Update.clicked.connect(self.updatesystem)
+
+        self.Logs = QPushButton("Show Logs")
+        self.Logs.clicked.connect(self.logs)
+
+        update.addWidget(self.Update)
+        update.addWidget(self.Logs)
+
+        win.addLayout(update)
+
+    def logs (self):
+
+        if self.Logs.text() == "Hide Logs":
+           self.Logs.setText("Show Logs")
+           self.Terminal.hide()
+           self.Result.show()
+        elif self.Logs.text() == "Show Logs":
+           self.Logs.setText("Hide Logs")
+           self.Terminal.show()
+           self.Result.hide()
+
     def updatesystem (self):
+
         self.Update.setEnabled(False)
         self.Terminal.clear()
         self.Result.setText("↻ System update. Please do not turn off the program.")
+        self.Result.setStyleSheet("""
+    color: #1793D1;
+""")
 
         self.Pacman = QProcess(self)
         self.Pacman.finished.connect(self.updatefinished)
@@ -54,16 +79,22 @@ class Window(QWidget):
 
         if exitCode == 0:
            self.Result.setText("✓ System updates completed successfully.")
+           self.Result.setStyleSheet("""
+    color: #00CC66;
+""")
            self.Update.setEnabled(True)
         else:
            self.Result.setText("✕ Error during system update.")
+           self.Result.setStyleSheet("""
+    color: #E53935;
+""")
            self.Update.setEnabled(True)
 
-    def output(self):
+    def output (self):
           Output = self.Pacman.readAllStandardOutput().data().decode()
           self.Terminal.insertPlainText(Output)
 
-    def error(self):
+    def error (self):
           Error = self.Pacman.readAllStandardError().data().decode()
           self.Terminal.appendPlainText(Error)
 

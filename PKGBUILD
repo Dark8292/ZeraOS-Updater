@@ -1,7 +1,7 @@
 # Maintainer: Dark <https://github.com/Dark8292>
 
 pkgname=zeraos-updater
-pkgver=1.0.1
+pkgver=1.0.2
 pkgrel=1
 pkgdesc="ZeraOS Updater"
 arch=('x86_64')

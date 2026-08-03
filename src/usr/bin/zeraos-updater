@@ -15,9 +15,9 @@ class Window(QWidget):
 
         win = QVBoxLayout()
 
-        self.Result = QLabel("")
-        self.Result.setStyleSheet("font-size: 13px;")
-        self.Result.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        self.Progress = QLabel("")
+        self.Progress.setStyleSheet("font-size: 13px;")
+        self.Progress.setAlignment(Qt.AlignmentFlag.AlignHCenter)
 
         self.Terminal = QPlainTextEdit()
         self.Terminal.setReadOnly(True)
@@ -31,7 +31,7 @@ class Window(QWidget):
 """)
 
         win.addWidget(self.Terminal)
-        win.addWidget(self.Result)
+        win.addWidget(self.Progress)
 
         self.setLayout(win)
 
@@ -53,19 +53,19 @@ class Window(QWidget):
         if self.Logs.text() == "Hide Logs":
            self.Logs.setText("Show Logs")
            self.Terminal.hide()
-           self.Result.show()
+           self.Progress.show()
         elif self.Logs.text() == "Show Logs":
            self.Logs.setText("Hide Logs")
            self.Terminal.show()
-           self.Result.hide()
+           self.Progress.hide()
 
     def updatesystem (self):
 
         self.Update.setEnabled(False)
         self.Terminal.clear()
-        self.Result.setText("↻ System update. Please do not turn off the program.")
-        self.Result.setStyleSheet("""
-    color: #1793D1;
+        self.Progress.setText("↻ System update \n Please do not turn off the program.")
+        self.Progress.setStyleSheet("""
+    color: #FFFFF;
 """)
 
         self.Pacman = QProcess(self)
@@ -78,14 +78,14 @@ class Window(QWidget):
     def updatefinished (self, exitCode, exitStatus):
 
         if exitCode == 0:
-           self.Result.setText("✓ System updates completed successfully.")
-           self.Result.setStyleSheet("""
+           self.Progress.setText("✓ System updates completed successfully.")
+           self.Progress.setStyleSheet("""
     color: #00CC66;
 """)
            self.Update.setEnabled(True)
         else:
-           self.Result.setText("✕ Error during system update.")
-           self.Result.setStyleSheet("""
+           self.Progress.setText("✕ Error during system update.")
+           self.Progress.setStyleSheet("""
     color: #E53935;
 """)
            self.Update.setEnabled(True)

@@ -2,7 +2,7 @@
 
 pkgname=zeraos-updater
 pkgver=1.0.2
-pkgrel=1
+pkgrel=2
 pkgdesc="ZeraOS Updater"
 arch=('x86_64')
 url="https://github.com/Dark8292"

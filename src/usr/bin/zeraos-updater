@@ -63,7 +63,7 @@ class Window(QWidget):
 
         self.Update.setEnabled(False)
         self.Terminal.clear()
-        self.Progress.setText("↻ System update \n Please do not turn off the program.")
+        self.Progress.setText("↻ System update \n Please do not turn off the program")
         self.Progress.setStyleSheet("""
     color: #FFFFF;
 """)
@@ -78,13 +78,13 @@ class Window(QWidget):
     def updatefinished (self, exitCode, exitStatus):
 
         if exitCode == 0:
-           self.Progress.setText("✓ System updates completed successfully.")
+           self.Progress.setText("✓ System updates completed successfully")
            self.Progress.setStyleSheet("""
     color: #00CC66;
 """)
            self.Update.setEnabled(True)
         else:
-           self.Progress.setText("✕ Error during system update.")
+           self.Progress.setText("✕ Error during system update")
            self.Progress.setStyleSheet("""
     color: #E53935;
 """)
